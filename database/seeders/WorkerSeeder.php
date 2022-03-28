@@ -15,6 +15,6 @@ class WorkerSeeder extends Seeder
     public function run()
     {
         Worker::truncate();
-        Worker::factory()->count(50)->create();
+        Worker::factory()->count(9)->create();
     }
 }

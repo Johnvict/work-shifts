@@ -20,6 +20,11 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api/v1'], function () use ($router) {
     $router->group(['prefix' => '/worker'], function () use ($router) {
-        $router->get('/all', 'WorkerController@all');
+        $router->get('/', function() {
+            return redirect('api/v1/worker/all');
+        });
+
+        $router->get('/all', ['as' => 'all', 'uses' => 'WorkerController@getAll']);
+        $router->get('/one/id/{id}', 'WorkerController@getOne');
     });
 });
