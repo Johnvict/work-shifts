@@ -2,6 +2,7 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -15,4 +16,10 @@
 
 $router->get('/', function () use ($router) {
     return $router->app->version();
+});
+
+$router->group(['prefix' => 'api/v1'], function () use ($router) {
+    $router->group(['prefix' => '/worker'], function () use ($router) {
+        $router->get('/all', 'WorkerController@all');
+    });
 });
