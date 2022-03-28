@@ -24,7 +24,18 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
             return redirect('api/v1/worker/all');
         });
 
-        $router->get('/all', ['as' => 'all', 'uses' => 'WorkerController@getAll']);
+        $router->get('/all', 'WorkerController@getAll');
         $router->get('/one/id/{id}', 'WorkerController@getOne');
+        $router->get('/one/id/{id}/schedules', 'WorkerController@withSchedules');
+        $router->get('/one/id/{id}/shifts', 'WorkerController@withShifts');
+    });
+
+    $router->group(['prefix' => '/schedule'], function () use ($router) {
+        $router->get('/', function() {
+            return redirect('api/v1/schedule/all');
+        });
+
+        $router->get('/all', 'ScheduleController@getAll');
+        $router->get('/one/id/{id}', 'ScheduleController@getOne');
     });
 });

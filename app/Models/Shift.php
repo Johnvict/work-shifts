@@ -16,6 +16,13 @@ class Shift extends Model
     public $timestamps = false;
 
     /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ["pivot", 'id'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -29,6 +36,6 @@ class Shift extends Model
      */
     public function schedules()
     {
-        return $this->hasMany(Schedule::class, 'worker_id');
+        return $this->hasMany(Schedule::class);
     }
 }

@@ -11,7 +11,7 @@ class Schedule extends Model
      *
      * @var array
      */
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = [ 'id', 'worker_id', 'shift_id', 'created_at', 'updated_at'];
 
     /**
      * The attributes that are mass assignable.
@@ -33,7 +33,7 @@ class Schedule extends Model
     /**
      * Relation to worker who owns the schedule
      */
-    public function workers()
+    public function worker()
     {
         return $this->belongsTo(Worker::class, 'worker_id');
     }

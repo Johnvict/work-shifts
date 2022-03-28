@@ -13,7 +13,17 @@ class WorkerService
      */
     public static function one($id)
     {
-        return Worker::whereId($id)->first();
+        return Worker::whereId($id)->with('shifts')->first();
+    }
+
+    /**
+     * Fetches one worker from the DB
+     *
+     * @return App\Model\Worker
+     */
+    public static function oneWithSchedules($id)
+    {
+        return Worker::whereId($id)->with('schedules')->first();
     }
 
     /**
