@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Services\ScheduleService;
+use Exception;
+use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
@@ -42,4 +44,15 @@ class ScheduleController extends Controller
         return $schedule ? self::successful($schedule) : self::failed("Sorry, no schedule found with this id", 404);
     }
 
+    public function create(Request $request) {
+        $hasError = self::validateRequest($request, self::$createScheduleRule);
+        if ($hasError) return self::failed($hasError);
+
+        try {
+            $data = $this->scheduleService->create($request->only(['worker_id', 'shift_id', 'date']));
+            return self::successful($data);
+        } catch (Exception $error) {
+            return  self::failed($error->getMessage());
+        }
+    }
 }

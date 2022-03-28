@@ -37,5 +37,6 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
 
         $router->get('/all', 'ScheduleController@getAll');
         $router->get('/one/id/{id}', 'ScheduleController@getOne');
+        $router->post('/create', 'ScheduleController@create');
     });
 });
