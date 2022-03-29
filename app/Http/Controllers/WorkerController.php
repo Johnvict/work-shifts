@@ -36,6 +36,7 @@ class WorkerController extends Controller
     /**
      * Fetches a single worker with necessary details
      *
+     * @param Integer $id Worker Id
      * @return \App\Helpers\ApiResponse
      */
     public function getOne($id)
@@ -48,6 +49,7 @@ class WorkerController extends Controller
     /**
      * Fetches a single worker with Schedules nested with shifts
      *
+     * @param Integer $id Worker Id
      * @return \App\Helpers\ApiResponse
      */
     public function withSchedules($id)
@@ -60,6 +62,7 @@ class WorkerController extends Controller
     /**
      * Fetches a single worker with Shifts nested with Schedules
      *
+     * @param Integer $id Worker Id
      * @return \App\Helpers\ApiResponse
      */
     public function withShifts($id)

@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
 
 trait RequestValidator
 {
@@ -21,11 +20,19 @@ trait RequestValidator
 		'date'          =>  'required|date|after_or_equal:today',
 	];
 
+	public static $createManyScheduleRule = [
+		'data'                 => 'array',
+        'data.*.worker_id'     => 'required|numeric|exists:workers,id',
+		'data.*.shift_id'      => 'required|numeric|exists:shifts,id',
+		'data.*.date'          => 'required|date|after_or_equal:today',
+	];
+
 
 	/**
-	 * ? To ensure a better object whose keys are the parameter keys as expected and values are the error message
-	 * @param Mixed $errorArray - Complex array got from Laravel Validator method
-	 * @return Mixed or null - An object is returned if there is an unexpected request body or null if no error
+	 * Ensures a better object whose keys are the parameter keys as expected and values are the error message
+     *
+	 * @param Mixed $errorArray Complex array got from Laravel Validator method
+	 * @return Mixed|null An object is returned if there is an unexpected request body or null if no error
 	 */
 	public static function formatError($errorArray)
 	{
@@ -37,10 +44,11 @@ trait RequestValidator
 	}
 
 	/**
-	 * ? To validate parameters on incoming requests
-	 * ? These validation customizes the validation error
-	 * @param Request $requestData - The request body as sent from the client
-	 * @return Mixed or null - An object is returned if there is an unexpected request body or null if no error
+	 * Validate parameters on incoming requests
+	 *
+	 * @param Illuminate\Http\Request $requestData The request body as sent from client
+     * @param Array $validationRule Validation rule for each request param
+	 * @return Mixed|null An object is returned if there is an unexpected request body or null if no error
 	 */
 	public static function validateRequest(Request $requestData, array $validationRule)
 	{

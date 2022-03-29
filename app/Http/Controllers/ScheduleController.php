@@ -36,6 +36,7 @@ class ScheduleController extends Controller
     /**
      * Fetches a single worker with necessary details
      *
+     * @param Integer $id Schedule Id
      * @return \App\Helpers\ApiResponse
      */
     public function getOne($id)
@@ -50,6 +51,18 @@ class ScheduleController extends Controller
 
         try {
             $data = $this->scheduleService->create($request->only(['worker_id', 'shift_id', 'date']));
+            return self::successful($data);
+        } catch (Exception $error) {
+            return  self::failed($error->getMessage());
+        }
+    }
+
+    public function createMany(Request $request) {
+        $hasError = self::validateRequest($request, self::$createManyScheduleRule);
+        if ($hasError) return self::failed($hasError);
+
+        try {
+            $data = $this->scheduleService->createMany($request->data);
             return self::successful($data);
         } catch (Exception $error) {
             return  self::failed($error->getMessage());
