@@ -40,7 +40,7 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->get('/one/id/{id}', 'ScheduleController@getOne');
         $router->post('/create', 'ScheduleController@create');
         $router->post('/create-many', 'ScheduleController@createMany');
-        $router->delete('/{id}', 'ScheduleController@delete');
+        $router->delete('delete/{id}', 'ScheduleController@delete');
     });
 
     $router->group(['prefix' => '/shifts'], function () use ($router) {

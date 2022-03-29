@@ -12,6 +12,7 @@ class ShiftService
      * Fetch all shifts with their associated schedules and workers
      *
      * @param date|null $date filter schedules attached to shift to a specific date or [today]
+     * @return Illuminate\Database\Eloquent\Collection
      */
     public static function all($date = null)
     {

@@ -75,7 +75,7 @@ class ScheduleController extends Controller
         if ($hasError) return self::failed($hasError);
 
         try {
-            $data = $this->scheduleService->createMany($request->data);
+            $data = $this->scheduleService::createMany($request->data);
             return self::successful($data);
         } catch (Exception $error) {
             return  self::failed($error->getMessage());

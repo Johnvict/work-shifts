@@ -23,7 +23,7 @@ class ScheduleService
     /**
      * Fetches one schedule from the DB with all related data
      *
-     * @return App\Model\Schedule
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public static function one($id)
     {
@@ -36,9 +36,9 @@ class ScheduleService
      * @param mixed $data Request fields: worker_id, shift_id, date
      * @return \App\Models\Schedule
      */
-    public function create($data)
+    public static function create($data)
     {
-        $this->checkExistence($data);
+        static::checkExistence($data);
         $schedule = Schedule::create($data);
         $schedule->shift;
         $schedule->worker;
@@ -46,26 +46,11 @@ class ScheduleService
     }
 
     /**
-     * Creates a list of schedules for several workers
-     *
-     * @param mixed $data Request fields: worker_id, shift_id, date
-     * @return \App\Models\Schedule
-     */
-    public function createMany($data)
-    {
-
-        $dataToStore = $this->filerOutExistedData($data);
-
-        Schedule::insert($dataToStore);
-        return  array_values($dataToStore);
-    }
-
-    /**
      * Checks if there is an existing work schedule for this worker on same date specified
      *
      * @param mixed $data Request data, including worker_id and date
      */
-    public function checkExistence($data)
+    private static function checkExistence($data)
     {
         $worker = Worker::whereId($data["worker_id"])->first();
         $scheduleExists = $worker->schedules()->where('date', $data["date"])->first();
@@ -75,13 +60,29 @@ class ScheduleService
         }
     }
 
+
+    /**
+     * Creates a list of schedules for several workers
+     *
+     * @param mixed $data Request fields: worker_id, shift_id, date
+     * @return \App\Models\Schedule
+     */
+    public static function createMany($data)
+    {
+
+        $dataToStore = static::filerOutExistedData($data);
+
+        Schedule::insert($dataToStore);
+        return  array_values($dataToStore);
+    }
+
     /**
      * Filter out any of these schedules of which a corresponding schedule is already created
      * for any of its associated worker on same specified date
      *
      * @param mixed $data Request data, including worker_id and date
      */
-    public function filerOutExistedData($data)
+    private static function filerOutExistedData($data)
     {
         $worker_ids = [];
         $dates = [];
@@ -119,6 +120,7 @@ class ScheduleService
     /**
      * Deletes a single schedule
      * @param Integer $id Id of the schedule to delete
+     * @return Array
      */
     public static function delete($id)
     {
