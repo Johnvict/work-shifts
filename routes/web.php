@@ -2,6 +2,7 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,5 +40,15 @@ $router->group(['prefix' => 'api/v1'], function () use ($router) {
         $router->get('/one/id/{id}', 'ScheduleController@getOne');
         $router->post('/create', 'ScheduleController@create');
         $router->post('/create-many', 'ScheduleController@createMany');
+        $router->delete('/{id}', 'ScheduleController@delete');
+    });
+
+    $router->group(['prefix' => '/shifts'], function () use ($router) {
+        $router->get('/', function(Request $request) {
+            return redirect("api/v1/shifts/all?date=$request->date");
+        });
+
+        $router->get('/all', 'ShiftController@getAll');
+        $router->get('/filter', 'ShiftController@filter');
     });
 });

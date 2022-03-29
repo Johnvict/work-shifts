@@ -45,6 +45,12 @@ class ScheduleController extends Controller
         return $schedule ? self::successful($schedule) : self::failed("Sorry, no schedule found with this id", 404);
     }
 
+    /**
+     * Creates a new schedule associated to a worker and a shift for a specified date
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function create(Request $request) {
         $hasError = self::validateRequest($request, self::$createScheduleRule);
         if ($hasError) return self::failed($hasError);
@@ -57,6 +63,13 @@ class ScheduleController extends Controller
         }
     }
 
+
+    /**
+     * Creates a list of new schedule, EACH associated to a worker and a shift for a specified date
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function createMany(Request $request) {
         $hasError = self::validateRequest($request, self::$createManyScheduleRule);
         if ($hasError) return self::failed($hasError);
@@ -67,5 +80,16 @@ class ScheduleController extends Controller
         } catch (Exception $error) {
             return  self::failed($error->getMessage());
         }
+    }
+
+    /**
+     * Deletes a shift
+     *
+     * @param Integer $id
+     */
+    public function delete($id) {
+        $data = $this->scheduleService->delete($id);
+        if (isset($data["schedule"])) return self::successful($data["schedule"]);
+        return self::failed($data["message"], 404);
     }
 }

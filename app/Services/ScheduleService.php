@@ -115,4 +115,19 @@ class ScheduleService
             return true;
         });
     }
+
+    /**
+     * Deletes a single schedule
+     * @param Integer $id Id of the schedule to delete
+     */
+    public static function delete($id)
+    {
+        $data = Schedule::with(['shift', 'worker'])->find($id);
+
+        if ($data) {
+            $data->delete();
+            return ["schedule" => $data];
+        }
+        return ["message" => "Sorry, no schedule found with this Id"];
+    }
 }

@@ -11,7 +11,7 @@ class Schedule extends Model
      *
      * @var array
      */
-    protected $hidden = [ 'id', 'worker_id', 'shift_id', 'created_at', 'updated_at'];
+    protected $hidden = ['worker_id', 'shift_id', 'created_at', 'updated_at'];
 
     /**
      * The attributes that are mass assignable.

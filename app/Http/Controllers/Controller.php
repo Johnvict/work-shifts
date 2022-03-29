@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
 use App\Helpers\ApiResponse;
-use App\Services\RequestValidator;
+use App\Helpers\RequestValidator;
 
 class Controller extends BaseController
 {

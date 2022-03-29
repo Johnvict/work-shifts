@@ -20,7 +20,7 @@ class Shift extends Model
      *
      * @var array
      */
-    protected $hidden = ["pivot", 'id'];
+    protected $hidden = ["pivot", "id"];
 
     /**
      * The attributes that are mass assignable.
@@ -36,6 +36,6 @@ class Shift extends Model
      */
     public function schedules()
     {
-        return $this->hasMany(Schedule::class);
+        return $this->hasMany(Schedule::class)->with('worker');
     }
 }
