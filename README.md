@@ -30,7 +30,7 @@
     
         $ docker-compose exec work_shifts composer install
   
- - Migrate and seed database with all provided records as in csv files (located in project directory `./database/files`)
+ - Migrate and seed database with all sample data
 
         $ docker-compose exec work_shifts php artisan migrate:fresh --seed
 
