@@ -19,7 +19,11 @@
 
 **Setup Instructions**
  - To get the app running, run the following command in the project root folder
-        
+     
+        $ git clone git@github.com:Johnvict/work-shifts.git
+
+        $ cp .env.example .env
+
         $ docker-compose up --build
 
  - Install Composer Dependencies for the Lumen project
